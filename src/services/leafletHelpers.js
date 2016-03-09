@@ -415,6 +415,32 @@ angular.module('ui-leaflet').service('leafletHelpers', function ($q, $log, $time
                 }
             }
         },
+        GlyphMarkersPlugin: {
+            isLoaded: function isLoaded() {
+                if (angular.isDefined(L.icon.glyph) && angular.isDefined(L.icon.glyph)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            is: function is(icon) {
+                if (this.isLoaded()) {
+                    return icon instanceof L.icon;
+                } else {
+                    return false;
+                }
+            },
+            equal: function equal(iconA, iconB) {
+                if (!this.isLoaded()) {
+                    return false;
+                }
+                if (this.is(iconA)) {
+                    return angular.equals(iconA, iconB);
+                } else {
+                    return false;
+                }
+            }
+        },
         LabelPlugin: {
             isLoaded: function() {
                 return angular.isDefined(L.Label);
