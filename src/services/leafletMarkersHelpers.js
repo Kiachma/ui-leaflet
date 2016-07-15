@@ -6,6 +6,7 @@ angular.module('ui-leaflet').service('leafletMarkersHelpers', function ($rootSco
         VectorMarkersPlugin = leafletHelpers.VectorMarkersPlugin,
         MakiMarkersPlugin = leafletHelpers.MakiMarkersPlugin,
         ExtraMarkersPlugin = leafletHelpers.ExtraMarkersPlugin,
+        GlyphMarkersPlugin = leafletHelpers.GlyphMarkersPlugin,
         DomMarkersPlugin = leafletHelpers.DomMarkersPlugin,
         safeApply = leafletHelpers.safeApply,
         Helpers = leafletHelpers,
@@ -46,6 +47,14 @@ angular.module('ui-leaflet').service('leafletMarkersHelpers', function ($rootSco
 
             return new L.VectorMarkers.icon(iconData);
         }
+
+        if (isDefined(iconData) && isDefined(iconData.type) && iconData.type === 'glyph') {
+            if (!GlyphMarkersPlugin.isLoaded()) {
+                $log.error(errorHeader + 'The GlyphMarkersPlugin Plugin is not loaded.');
+            }
+            return new L.icon.glyph(iconData)
+        }
+
 
         if (isDefined(iconData) && isDefined(iconData.type) && iconData.type === 'makiMarker') {
             if (!MakiMarkersPlugin.isLoaded()) {
